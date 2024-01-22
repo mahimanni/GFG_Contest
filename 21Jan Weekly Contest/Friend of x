@@ -1,0 +1,9 @@
+public static String isFriend(int n, int x, int y, int[] arr) {
+        
+        for(int i=0;i<n;i++)
+        {
+            if(x+arr[i]==y)
+              return "yes";
+        }
+        return "no";
+    }
