@@ -1,0 +1,15 @@
+
+public static int minimizeArrayScore(int n, int[] arr) {
+        int i=0,l=0,r=n-1;
+        int sum[]=new int[n/2];
+        Arrays.sort(arr);
+        while(i<n/2)
+        {
+            sum[i]=arr[l]+arr[r];
+            l++;
+            r--;
+            i++;
+        }
+        Arrays.sort(sum);
+        return sum[(n/2)-1];
+    }
