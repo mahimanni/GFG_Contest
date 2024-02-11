@@ -1,0 +1,51 @@
+class Solution {
+    // Function to find element with more appearances between two elements in an
+    // array.
+    public int majorityWins(int arr[], int n, int x, int y) {
+       int count1=0,count2=0;
+       for(int i=0;i<n;i++)
+       {
+           if(arr[i]==x)
+             count1+=1;
+           if(arr[i]==y)
+             count2+=1;
+       }
+       if(count1>count2)
+       {
+           return x;
+       }
+       if(count1<count2)
+       {
+           return y;
+       }
+    
+        //   if(x<y)
+        //     return x;
+        //   else
+        //     return y;
+        return Math.min(x,y);
+    }
+}
+
+//alternate approach
+class Solution {
+    // Function to find element with more appearances between two elements in an
+    // array.
+    public int majorityWins(int[] arr, int n, int x, int y) {
+        // Count the occurrences of the potential majority elements
+        int count_x = countOccurrences(arr, x);
+        int count_y = countOccurrences(arr, y);
+
+        // Compare the counts and return the result accordingly
+        if (count_x > count_y || (count_x == count_y && x < y)) {
+            return x;
+        } else {
+            return y;
+        }
+    }
+
+    // Helper function to count occurrences of an element in an array
+    private int countOccurrences(int[] arr, int target) {
+        return (int) Arrays.stream(arr).filter(value -> value == target).count();
+    }
+}
