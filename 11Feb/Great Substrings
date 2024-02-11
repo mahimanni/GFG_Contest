@@ -1,0 +1,104 @@
+//Bruteforce approach
+//TC: O(N^3)
+//SC: O(1)
+class Solution {
+    public static int countOne(String s)
+    {
+        int count=0;
+        for(int i=0;i<s.length();i++)
+        {
+            if(s.charAt(i)=='1')
+             count+=1;
+        }
+        if(count>(s.length())/2)
+         return 1;
+        else
+         return 0;
+    }
+    public static long greatCount(int N, String S) {
+        // HashMap<String,Integer> map=new HashMap<>();
+        String str="";
+        int count=0;
+        for(int i=0;i<S.length();i++)
+        {
+            for(int j=i;j<S.length();j++)
+            {
+                str=S.substring(i,j+1);
+                // if(map.containsKey(str))
+                // {
+                //     if(map.get(str)==1)
+                //       count+=1;
+                // }
+                // else
+                // {
+                    int ans=countOne(str);
+                    // map.put(str,ans);
+                    if(ans==1)
+                     count+=1;
+                // }
+            }
+        }
+        return count;
+    }
+}
+
+//method-2 Optimized Approach
+//Time Complexity: O(N * log(N)), Each character of the string is processed in a loop (O(N)), 
+                   and for each character, there are log(N)-time segment tree operations (update and query).
+//Space Complexity: O(N), Two segment trees are maintained, each requiring an array of size 4 * N, contributing to the overall space complexity.
+
+class Solution {
+    public static long greatCount(int N, String S) {
+        odd_seg = new SegTree(2 * N);
+        even_seg= new SegTree(2 * N);
+        int pref=N;
+        long ans=0;
+        odd_seg.update(0,2*N-1,N,1, 0);
+        for(int i = 0; i < N; i++){
+            if (S.charAt(i) == '1')
+                pref+=1;
+            else
+                pref-=1;
+            if (i%2==0){
+                even_seg.update(0,2*N-1,pref,1, 0);
+                ans+=even_seg.query(0,2*N-1,0,pref-2, 0);
+                ans+=odd_seg.query(0,2*N-1,0,pref-1, 0);
+            }
+            else{
+                odd_seg.update(0,2*N-1,pref,1, 0);
+                ans+=odd_seg.query(0,2*N-1,0,pref-2, 0);
+                ans+=even_seg.query(0,2*N-1,0,pref-1, 0);
+            }
+        }
+        return ans;
+    }
+    static SegTree odd_seg, even_seg;
+}
+class SegTree{
+    long seg[];
+    int n;
+    SegTree(int n){
+        this.seg = new long[n << 2];
+        this.n = n;
+    }
+    void update(int low, int high, int ind, int val, int node){
+        if(low == high){
+            seg[node] += val;
+            return;
+        }
+        int mid = (low + high) >> 1;
+        if(ind <= mid)
+            update(low, mid, ind, val, (node << 1) + 1);
+        else
+            update(mid + 1, high, ind, val, (node << 1) + 2);
+        seg[node] = seg[(node << 1) + 1] + seg[(node << 1) + 2];
+    }
+    long query(int low, int high, int l, int r, int node){
+        if(low > r || high < l)
+            return 0;
+        if(low >= l && high <= r)
+            return seg[node];
+        int mid = (low + high) >> 1;
+        return query(low, mid, l, r, (node << 1) + 1) + query(mid + 1, high, l, r, (node << 1) + 2);
+    }
+}
