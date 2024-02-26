@@ -22,6 +22,7 @@ class Solution {
 }
 
 //method-There's always a bruteforce behind the optimized one.Just believe
+//Even if you do not know the things you can solve a problem.Just use your brain
 class Solution {
     public static String smallestString(int n, String s) {
         String str="";
