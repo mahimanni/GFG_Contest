@@ -1,0 +1,41 @@
+//method-1
+class Solution {
+    public static boolean isMagicArray(int n, int[] arr) {
+        
+       for(int i=0;i<n-1;i++)
+       {
+           if(arr[i]%2==0 && arr[i+1]%2==0)
+            return false;
+           else if(arr[i]%2!=0 && arr[i+1]%2!=0)
+            return false;   
+       }
+       return true;
+    }
+}
+
+//method-2
+class Solution {
+    public static boolean isMagicArray(int n, int[] arr) {
+        
+       for(int i=0;i<n-1;i++)
+       {
+           if(arr[i]%2==arr[i+1]%2)
+            return false;
+       }
+       return true;
+    }
+}
+
+//method-3 Optimized
+//& operation is way way faster than a division,*,%
+class Solution {
+    public static boolean isMagicArray(int n, int[] arr) {
+        
+        for(int i=0;i<n-1;i++)
+        {
+            if((arr[i]&1)==(arr[i+1]&1))
+                return false;
+        }
+        return true;
+    }
+}
