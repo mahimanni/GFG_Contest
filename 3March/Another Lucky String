@@ -1,0 +1,44 @@
+class Solution {
+    public static int luckyString(int N, String S) {
+        // code here
+        int countA=0,countB=0,countC=0,len=0,minlen=Integer.MAX_VALUE,flag=0;
+        for(int j=0;j<N-1;j++)
+        {
+            len=0;
+            countA=0;
+            countB=0;
+            countC=0;
+            for(int i=j;i<N;i++)
+            {
+                char ch=S.charAt(i);
+                if(ch=='A')
+                {
+                    countA++;
+                    len++;
+                }
+                else if(ch=='B')
+                {
+                    countB++;
+                    len++;
+                }
+                else if(ch=='C')
+                {
+                    countC++; 
+                    len++;
+                }
+                
+                if(countA>countB && countA>countC && (len>=2))
+                {
+                    minlen=Math.min(minlen,len);
+                    flag=1;
+                    if(len==2)
+                        return 2;
+                    break;
+                }
+            }  
+        }
+        if(flag==0)
+            return -1;
+        return minlen;
+    }
+}
