@@ -1,0 +1,19 @@
+class Solution {
+    public int chocolateDistribution(int N, int M, int[] arr, int[] brr) {
+        int count=0;
+        Arrays.sort(arr);
+        Arrays.sort(brr);
+        
+        int i=0,j=0;
+        while(i<arr.length && j<brr.length)
+        {
+            if(arr[i]<=brr[j])
+            {
+                count++;
+                i++;
+            }
+            j++;
+        }
+        return count;
+    }
+}
